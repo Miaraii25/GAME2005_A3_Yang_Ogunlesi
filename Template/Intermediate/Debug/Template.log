@@ -1,0 +1,612 @@
+﻿  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_widgets.cpp
+  imgui_sdl.cpp
+  Button.cpp
+D:\Game Physics\SDL_Engine-master\src\Button.cpp(22,15): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Button.cpp(23,16): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Button.cpp(38,46): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Button.cpp(38,43): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+  CollisionManager.cpp
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(9,28): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(9,21): warning C4244: 'initializing': conversion from 'T' to 'const int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(10,28): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(10,21): warning C4244: 'initializing': conversion from 'T' to 'const int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(20,72): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(20,24): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(57,41): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(57,22): warning C4244: 'initializing': conversion from 'int' to 'const float', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(58,43): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(58,23): warning C4244: 'initializing': conversion from 'int' to 'const float', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(59,41): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(59,22): warning C4244: 'initializing': conversion from 'int' to 'const float', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(60,43): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(60,23): warning C4244: 'initializing': conversion from 'int' to 'const float', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(174,9): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(183,36): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(183,25): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(185,38): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(185,26): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(188,60): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(188,50): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(214,19): warning C4244: 'return': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(221,35): warning C4244: 'initializing': conversion from 'const _Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(221,25): warning C4244: 'initializing': conversion from 'const _Ty' to 'const int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(224,19): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(226,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(303,38): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(303,23): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(304,38): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\CollisionManager.cpp(304,23): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+  Sprite.cpp
+  UIControl.cpp
+D:\Game Physics\SDL_Engine-master\src\UIControl.cpp(33,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\UIControl.cpp(33,88): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  DisplayObject.cpp
+  EndScene.cpp
+  FontManager.cpp
+  Game.cpp
+  GameController.cpp
+  GameObject.cpp
+  Label.cpp
+D:\Game Physics\SDL_Engine-master\src\Label.cpp(15,15): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Label.cpp(16,16): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Label.cpp(30,52): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Label.cpp(30,49): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Label.cpp(52,15): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Label.cpp(53,16): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Label.cpp(71,15): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Label.cpp(72,16): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+  PlayScene.cpp
+  main.cpp
+D:\Game Physics\SDL_Engine-master\src\main.cpp(9,32): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Plane.cpp
+D:\Game Physics\SDL_Engine-master\src\Plane.cpp(40,6): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Plane.cpp(40,3): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Player.cpp
+D:\Game Physics\SDL_Engine-master\src\Player.cpp(42,7): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Player.cpp(42,4): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Player.cpp(46,7): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Player.cpp(46,4): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Player.cpp(50,7): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Player.cpp(50,4): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Player.cpp(54,7): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Player.cpp(54,4): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Generating Code...
+  Compiling...
+  Renderer.cpp
+  Scene.cpp
+  ship.cpp
+D:\Game Physics\SDL_Engine-master\src\ship.cpp(12,15): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\ship.cpp(13,16): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\ship.cpp(37,46): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\ship.cpp(37,43): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\ship.cpp(149,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\ship.cpp(149,22): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
+  SoundManager.cpp
+D:\Game Physics\SDL_Engine-master\src\SoundManager.cpp(146,27): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+D:\Game Physics\SDL_Engine-master\src\SoundManager.cpp(146,20): warning C4244: 'initializing': conversion from '_Ty' to 'const int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+D:\Game Physics\SDL_Engine-master\src\SoundManager.cpp(148,28): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+D:\Game Physics\SDL_Engine-master\src\SoundManager.cpp(148,21): warning C4244: 'initializing': conversion from '_Ty' to 'const int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+  EventManager.cpp
+D:\Game Physics\SDL_Engine-master\src\EventManager.cpp(119,29): warning C4018: '<': signed/unsigned mismatch
+D:\Game Physics\SDL_Engine-master\src\EventManager.cpp(178,37): warning C4244: '=': conversion from 'Sint32' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\EventManager.cpp(179,37): warning C4244: '=': conversion from 'Sint32' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  SpriteSheet.cpp
+  StartScene.cpp
+  Target.cpp
+D:\Game Physics\SDL_Engine-master\src\Target.cpp(10,15): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Target.cpp(11,16): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Target.cpp(29,48): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Target.cpp(29,45): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+  TextureManager.cpp
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(137,36): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(137,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(138,37): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(138,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(180,36): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(180,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(181,37): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(181,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(197,34): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(197,26): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(225,33): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(225,26): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(232,32): warning C4018: '>': signed/unsigned mismatch
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(260,36): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(260,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(261,37): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(261,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(290,36): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(290,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(291,37): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(291,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(310,11): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\TextureManager.cpp(311,11): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Util.cpp
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(238,15): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(239,15): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(255,16): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(287,8): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(288,8): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(289,8): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(290,8): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(295,59): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(295,52): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(295,45): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(295,36): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(301,8): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(302,8): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(303,8): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(304,8): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(307,24): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(308,24): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(321,8): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(322,8): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(323,8): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(324,8): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(329,15): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(343,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(343,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(344,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(344,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(345,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(345,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(346,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(346,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(350,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(350,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(351,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(351,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(352,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(352,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(353,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(353,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(357,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(357,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(358,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(358,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(359,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(359,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(360,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(360,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(364,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(364,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(365,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(365,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(366,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(366,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(367,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(367,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(371,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(371,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(372,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(372,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(373,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(373,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(374,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(374,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(375,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(375,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(376,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(376,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(377,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(377,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(378,57): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(378,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(405,16): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(406,17): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(411,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(421,22): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Game Physics\SDL_Engine-master\src\Util.cpp(430,19): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
+  Template.vcxproj -> D:\Game Physics\SDL_Engine-master\bin\Debug\Template.exe
