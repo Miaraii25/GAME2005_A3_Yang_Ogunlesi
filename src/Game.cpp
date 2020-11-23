@@ -32,6 +32,8 @@ void Game::init()
 
 bool Game::init(const char* title, const int x, const int y, const int width, const int height, const bool fullscreen)
 {
+	m_windowWidth = width;
+	m_windowHeight = height;
 	auto flags = 0;
 
 	if (fullscreen)
@@ -53,7 +55,12 @@ bool Game::init(const char* title, const int x, const int y, const int width, co
 			std::cout << "window creation success" << std::endl;
 
 			// create a new SDL Renderer and store it in the Singleton
-			const auto renderer = (Config::make_resource(SDL_CreateRenderer(m_pWindow.get(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)));
+			auto renderer = (Config::make_resource(SDL_CreateRenderer(m_pWindow.get(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)));
+			auto err = SDL_GetError();
+			
+			if(strlen(err) > 1)
+				renderer = (Config::make_resource(SDL_CreateRenderer(m_pWindow.get(), -1, SDL_RENDERER_SOFTWARE)));
+			
 			Renderer::Instance()->setRenderer(renderer);
 			
 			if (Renderer::Instance()->getRenderer() != nullptr) // render init success
@@ -129,7 +136,8 @@ Uint32 Game::getFrames() const
 
 void Game::changeSceneState(const SceneState new_state)
 {
-	if (new_state != m_currentSceneState) {
+	if (new_state != m_currentSceneState) 
+	{
 
 		// scene clean up
 		if (m_currentSceneState != NO_SCENE) 
@@ -144,6 +152,7 @@ void Game::changeSceneState(const SceneState new_state)
 
 		m_currentScene = nullptr;
 
+		SceneState oldState = m_currentSceneState;
 		m_currentSceneState = new_state;
 
 		EventManager::Instance().reset();
@@ -158,8 +167,12 @@ void Game::changeSceneState(const SceneState new_state)
 			m_currentScene = new PlayScene();
 			std::cout << "play scene activated" << std::endl;
 			break;
+		case PLAY_SCENE_2:
+			m_currentScene = new PlayScene2();
+			std::cout << "play scene 2 activated" << std::endl;
+			break;
 		case END_SCENE:
-			m_currentScene = new EndScene();
+			m_currentScene = new EndScene(oldState);
 			std::cout << "end scene activated" << std::endl;
 			break;
 		default:
@@ -179,14 +192,24 @@ void Game::render() const
 {
 	SDL_RenderClear(Renderer::Instance()->getRenderer()); // clear the renderer to the draw colour
 
-	m_currentScene->draw();
+	if (m_currentScene)
+	{
+			m_currentScene->draw();
+
+	}
+	//m_currentScene->draw();
 
 	SDL_RenderPresent(Renderer::Instance()->getRenderer()); // draw to the screen
 }
 
 void Game::update() const
 {
-	m_currentScene->update();
+	if (m_currentScene)
+	{
+		m_currentScene->update();
+	}
+	//m_currentScene->update();
+
 }
 
 void Game::clean() const
@@ -203,5 +226,11 @@ void Game::clean() const
 
 void Game::handleEvents()
 {
-	m_currentScene->handleEvents();
+	//m_currentScene->handleEvents();
+
+	if (m_currentScene)
+	{
+		m_currentScene->handleEvents();
+
+	}
 }

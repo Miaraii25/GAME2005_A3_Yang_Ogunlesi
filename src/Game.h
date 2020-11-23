@@ -16,6 +16,7 @@
 // Scenes
 #include "StartScene.h"
 #include "PlayScene.h"
+#include "PlayScene2.h"
 #include "EndScene.h"
 
 #include "Config.h"
@@ -46,6 +47,8 @@ public:
 	void quit();
 
 	// getter and setter functions
+	int getWindowWidth() const { return m_windowWidth; }
+	int getWindowHeight() const { return m_windowHeight; }
 	glm::vec2 getMousePosition() const;
 	void setFrames(Uint32 frames);
 	Uint32 getFrames() const;
@@ -60,14 +63,16 @@ private:
 	bool m_bRunning;
 	Uint32 m_frames;
 	glm::vec2 m_mousePosition;
+	int m_windowWidth;
+	int m_windowHeight;
 
 	// scene variables
-	Scene* m_currentScene;
+	Scene*m_currentScene;
 	SceneState m_currentSceneState;
 
 	// storage structures
 	std::shared_ptr<SDL_Window> m_pWindow;
-	static Game* s_pInstance;
+	static Game*s_pInstance;
 };
 
 typedef Game TheGame;

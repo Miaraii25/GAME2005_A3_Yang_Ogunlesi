@@ -2,6 +2,7 @@
 #ifndef __END_SCENE__
 #define __END_SCENE__
 
+#include "SceneState.h"
 #include "Scene.h"
 #include "Label.h"
 #include "Button.h"
@@ -9,7 +10,7 @@
 class EndScene final : public Scene
 {
 public:
-	EndScene();
+	EndScene(const SceneState lastScene);
 	~EndScene();
 
 	// Inherited via Scene

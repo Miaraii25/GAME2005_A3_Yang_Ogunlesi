@@ -35,6 +35,12 @@ private:
 	std::vector<DisplayObject*> m_displayList;
 
 	static bool sortObjects(DisplayObject* left, DisplayObject* right);
+
+protected:
+
+	SceneState m_lastScene;
+	bool m_willChange;	//tells
+	SceneState m_nextScene;
 };
 
 #endif /* defined (__SCENE__) */

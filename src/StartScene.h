@@ -11,6 +11,7 @@ class StartScene final : public Scene
 {
 public:
 	StartScene();
+	StartScene(const SceneState lastScene);
 	~StartScene();
 
 	// Inherited via Scene
@@ -20,13 +21,18 @@ public:
 	virtual void handleEvents() override;
 	virtual void start() override;
 	
-private:
 	Label* m_pStartLabel{};
-	Label* m_pInstructionsLabel{};
+	Label* m_pNameLabel{};
+	Label* m_pNameLabel2{};
+	Label* m_pNameLabel3{};
 
-	Ship* m_pShip{};
+	Label* m_pScene1Label{};
+	Label* m_pScene2Label{};
 
-	Button* m_pStartButton;
+	//Ship* m_pShip{};
+
+	Button* m_pStartLevel1Button;
+	Button* m_pStartLevel2Button;
 };
 
 #endif /* defined (__START_SCENE__) */
