@@ -10,6 +10,14 @@ SoundManager::SoundManager()
 SoundManager::~SoundManager()
 = default;
 
+void SoundManager::init()
+{
+	//for now just load the SFX manually
+	load("../Assets/audio/engine.ogg", "engine", SoundType::SOUND_SFX);
+	load("../Assets/audio/thunder.ogg", "thunder", SoundType::SOUND_SFX);
+	load("../Assets/audio/yay.ogg", "yay", SoundType::SOUND_SFX);
+}
+
 void SoundManager::allocateChannels(const int channels) const
 {
 	Mix_AllocateChannels(channels);

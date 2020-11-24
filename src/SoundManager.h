@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <map> 
+#include <vector>
 
 #include "SoundType.h"
 #include <SDL_mixer.h>
@@ -20,6 +21,7 @@ public:
 		return instance;
 	}
 	
+	void init();
 	void allocateChannels(const int channels) const;
 	bool load(const std::string& file_name, const std::string& id, SoundType type);
 	void unload(const std::string& id, SoundType type);

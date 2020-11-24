@@ -21,7 +21,11 @@ public:
 
 private:
 	void m_buildAnimations();
-
+	//the friction factor is used to slow down the player. 1 = no friction 0 = total stop
+	PlayerAnimationState m_lastAnimState;
+	float m_frictionFactor;
+	glm::vec2 m_moveSpeed;
+	glm::vec2 m_accelerationRate;
 	PlayerAnimationState m_currentAnimationState;
 };
 

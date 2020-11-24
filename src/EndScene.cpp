@@ -66,20 +66,20 @@ void EndScene::start()
 	m_pRestartButton = new Button("../Assets/textures/Replay.png", "Replay", RESTART_BUTTON);
 	m_pRestartButton->getTransform()->position = glm::vec2(400.0f, 400.0f);
 	m_pRestartButton->addEventListener(CLICK, [&]()-> void
-		{
-			m_pRestartButton->setActive(false);
-			TheGame::Instance()->changeSceneState(m_lastScene);
-		});
+	{
+		m_pRestartButton->setActive(false);
+		TheGame::Instance()->changeSceneState(m_lastScene);
+	});
 
 	m_pRestartButton->addEventListener(MOUSE_OVER, [&]()->void
-		{
-			m_pRestartButton->setAlpha(128);
-		});
+	{
+		m_pRestartButton->setAlpha(128);
+	});
 
 	m_pRestartButton->addEventListener(MOUSE_OUT, [&]()->void
-		{
-			m_pRestartButton->setAlpha(255);
-		});
+	{
+		m_pRestartButton->setAlpha(255);
+	});
 
 	addChild(m_pRestartButton);
 }

@@ -21,14 +21,14 @@ public:
 	virtual void handleEvents() override;
 	virtual void start() override;
 	
+private:
 	Label* m_pStartLabel{};
 	Label* m_pNameLabel{};
 	Label* m_pNameLabel2{};
-	Label* m_pNameLabel3{};
 
 	Label* m_pScene1Label{};
 	Label* m_pScene2Label{};
-
+	
 	//Ship* m_pShip{};
 
 	Button* m_pStartLevel1Button;

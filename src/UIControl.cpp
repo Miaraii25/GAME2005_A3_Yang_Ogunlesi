@@ -30,7 +30,12 @@ void UIControl::onMouseOver()
 {
 	const auto mousePosition = EventManager::Instance().getMousePosition();
 	
-	if (CollisionManager::pointRectCheck(mousePosition, getTransform()->position, getWidth(), getHeight()))
+	// UI Controls have their 0,0 transform right in the middle, not the top left
+	// so we need to change what bounds we are checking against
+	glm::vec2 pos = getTransform()->position - glm::vec2(getWidth(), getHeight())/2.0f;
+
+
+	if (CollisionManager::pointRectCheck(mousePosition, pos, getWidth(), getHeight()))
 	{
 		m_mouseOver = true;
 	}

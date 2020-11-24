@@ -24,4 +24,5 @@ struct RigidBody
 		return false;
 	}
 };
+
 #endif /* defined (__RIGID_BODY__) */

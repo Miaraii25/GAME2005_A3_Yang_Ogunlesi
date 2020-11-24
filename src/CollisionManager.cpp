@@ -3,61 +3,62 @@
 #include <algorithm>
 
 
-
 int CollisionManager::squaredDistance(const glm::vec2 p1, const glm::vec2 p2)
 {
-	const int diffOfXs = p2.x - p1.x;
-	const int diffOfYs = p2.y - p1.y;
-	const auto result = diffOfXs * diffOfXs + diffOfYs * diffOfYs;
+	int diffOfXs = p2.x - p1.x;
+	int diffOfYs = p2.y - p1.y;
+	auto result = diffOfXs * diffOfXs + diffOfYs * diffOfYs;
 
 	return result;
 }
 
-bool CollisionManager::squaredRadiusCheck(GameObject* object1, GameObject* object2)
+void CollisionManager::onCollision(std::shared_ptr<GameObject> object1, std::shared_ptr<GameObject> object2, const std::function<void(CollisionResult)>& onEnter, CollisionResult result)
 {
-	glm::vec2 P1 = object1->getTransform()->position;
-	glm::vec2 P2 = object2->getTransform()->position;
-	const int halfHeights = (object1->getHeight() + object2->getHeight()) * 0.5f;
-
-	//if (glm::distance(P1, P2) < halfHeights) {
-
-	if (CollisionManager::squaredDistance(P1, P2) < (halfHeights * halfHeights)) {
-		if (!object2->getRigidBody()->isColliding) {
-
-			object2->getRigidBody()->isColliding = true;
-
-			switch (object2->getType()) {
-			case TARGET:
-				std::cout << "Collision with Target!" << std::endl;
-				SoundManager::Instance().playSound("yay", 0);
-
-				
-				break;
-			default:
-				
-				break;
-			}
-
-			return true;
-		}
-		return false;
-	}
-	else
+	if (object1->getRigidBody()->colliders[object2->getRigidBody()] == false)
 	{
-		object2->getRigidBody()->isColliding = false;
-		return false;
+		object2->getRigidBody()->colliders[object1->getRigidBody()] = true;
+		object1->getRigidBody()->colliders[object2->getRigidBody()] = true;
+
+		if (onEnter)
+		{
+			onEnter(result);
+		}
 	}
 }
 
-bool CollisionManager::AABBCheck(GameObject* object1, GameObject* object2)
+bool CollisionManager::squaredRadiusCheck(std::shared_ptr<GameObject> object1, std::shared_ptr<GameObject> object2, const std::function<void(CollisionResult)>& onEnter)
+{
+	glm::vec2 P1 = object1->getTransform()->position;
+	glm::vec2 P2 = object2->getTransform()->position;
+	int halfHeights = (object1->getHeight() + object2->getHeight()) * 0.5f;
+
+	if (CollisionManager::squaredDistance(P1, P2) < (halfHeights * halfHeights)) 
+	{
+		onCollision(object1, object2, onEnter);
+
+		return true;
+	}
+	else
+	{
+		object2->getRigidBody()->colliders[object1->getRigidBody()] = false;
+		object1->getRigidBody()->colliders[object2->getRigidBody()] = false;
+	}
+
+	return false;
+}
+
+CollisionResult CollisionManager::AABBCheck(std::shared_ptr<GameObject> object1, std::shared_ptr<GameObject> object2, const std::function<void(CollisionResult)>& onEnter)
 {
 	// prepare relevant variables
-	const auto p1 = object1->getTransform()->position;
-	const auto p2 = object2->getTransform()->position;
-	const float p1Width = object1->getWidth();
-	const float p1Height = object1->getHeight();
-	const float p2Width = object2->getWidth();
-	const float p2Height = object2->getHeight();
+	CollisionResult res;
+
+	auto p1 = object1->getTransform()->position;
+	auto p2 = object2->getTransform()->position;
+	auto p1HalfExt = glm::vec2(object1->getWidth()/2.0f, object1->getHeight()/2.0f);
+	float p1Width = object1->getWidth();
+	float p1Height = object1->getHeight();
+	float p2Width = object2->getWidth();
+	float p2Height = object2->getHeight();
 
 	if (
 		p1.x < p2.x + p2Width &&
@@ -65,48 +66,44 @@ bool CollisionManager::AABBCheck(GameObject* object1, GameObject* object2)
 		p1.y < p2.y + p2Height &&
 		p1.y + p1Height > p2.y
 		)
-	{
-		if (!object2->getRigidBody()->isColliding) {
+	{		
+		glm::vec2 diff = p1 - p2;
+		glm::vec2 clamped = glm::clamp(diff, -p1HalfExt, p1HalfExt);
+		glm::vec2 closest = p2 + clamped;
+		diff = closest - p1;
 
-			object2->getRigidBody()->isColliding = true;
+		res.collided = true;
+		res.surfaceNormal = glm::vec2(clamped.y, -clamped.x);
+		res.penetration = p1Width - glm::length(diff);
+		res.collisionPoint = closest;
 
-			switch (object2->getType()) {
-			case TARGET:
-				std::cout << "Collision with Target!" << std::endl;
-				SoundManager::Instance().playSound("yay", 0);
-				break;
-			default:
-				
-				break;
-			}
-
-			return true;
-		}
-		return false;
+		onCollision(object1, object2, onEnter, res);
 	}
 	else
 	{
-		object2->getRigidBody()->isColliding = false;
-		return false;
+		res.collided = false;
+
+		object2->getRigidBody()->colliders[object1->getRigidBody()] = false;
+		object1->getRigidBody()->colliders[object2->getRigidBody()] = false;
 	}
 
-	return false;
+	return res;
 }
 
 bool CollisionManager::lineLineCheck(const glm::vec2 line1_start, const glm::vec2 line1_end, const glm::vec2 line2_start, const glm::vec2 line2_end)
 {
-	const auto x1 = line1_start.x;
-	const auto x2 = line1_end.x;
-	const auto x3 = line2_start.x;
-	const auto x4 = line2_end.x;
-	const auto y1 = line1_start.y;
-	const auto y2 = line1_end.y;
-	const auto y3 = line2_start.y;
-	const auto y4 = line2_end.y;
+	auto x1 = line1_start.x;
+	auto x2 = line1_end.x;
+	auto x3 = line2_start.x;
+	auto x4 = line2_end.x;
+	auto y1 = line1_start.y;
+	auto y2 = line1_end.y;
+	auto y3 = line2_start.y;
+	auto y4 = line2_end.y;
 
 	// calculate the distance to intersection point
-	const auto uA = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
-	const auto uB = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
+	auto uA = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
+	auto uB = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
 
 	// if uA and uB are between 0-1, lines are colliding
 	if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1)
@@ -119,21 +116,21 @@ bool CollisionManager::lineLineCheck(const glm::vec2 line1_start, const glm::vec
 
 bool CollisionManager::lineRectCheck(const glm::vec2 line1_start, const glm::vec2 line1_end, const glm::vec2 rec_start, const float rect_width, const float rect_height)
 {
-	const auto x1 = line1_start.x;
-	const auto x2 = line1_end.x;
-	const auto y1 = line1_start.y;
-	const auto y2 = line1_end.y;
-	const auto rx = rec_start.x;
-	const auto ry = rec_start.y;
-	const auto rw = rect_width;
-	const auto rh = rect_height;
+	auto x1 = line1_start.x;
+	auto x2 = line1_end.x;
+	auto y1 = line1_start.y;
+	auto y2 = line1_end.y;
+	auto rx = rec_start.x;
+	auto ry = rec_start.y;
+	auto rw = rect_width;
+	auto rh = rect_height;
 
 	// check if the line has hit any of the rectangle's sides
 	// uses the Line/Line function below
-	const auto left = lineLineCheck(glm::vec2(x1, y1), glm::vec2(x2, y2), glm::vec2(rx, ry), glm::vec2(rx, ry + rh));
-	const auto right = lineLineCheck(glm::vec2(x1, y1), glm::vec2(x2, y2), glm::vec2(rx + rw, ry), glm::vec2(rx + rw, ry + rh));
-	const auto top = lineLineCheck(glm::vec2(x1, y1), glm::vec2(x2, y2), glm::vec2(rx, ry), glm::vec2(rx + rw, ry));
-	const auto bottom = lineLineCheck(glm::vec2(x1, y1), glm::vec2(x2, y2), glm::vec2(rx, ry + rh), glm::vec2(rx + rw, ry + rh));
+	auto left = lineLineCheck(glm::vec2(x1, y1), glm::vec2(x2, y2), glm::vec2(rx, ry), glm::vec2(rx, ry + rh));
+	auto right = lineLineCheck(glm::vec2(x1, y1), glm::vec2(x2, y2), glm::vec2(rx + rw, ry), glm::vec2(rx + rw, ry + rh));
+	auto top = lineLineCheck(glm::vec2(x1, y1), glm::vec2(x2, y2), glm::vec2(rx, ry), glm::vec2(rx + rw, ry));
+	auto bottom = lineLineCheck(glm::vec2(x1, y1), glm::vec2(x2, y2), glm::vec2(rx, ry + rh), glm::vec2(rx + rw, ry + rh));
 
 	// if ANY of the above are true, the line
 	// has hit the rectangle
@@ -174,31 +171,26 @@ int CollisionManager::minSquaredDistanceLineLine(glm::vec2 line1_start, glm::vec
 	return norm;
 }
 
-bool CollisionManager::lineAABBCheck(Ship* object1, GameObject* object2)
+bool CollisionManager::lineAABBCheck(std::shared_ptr<GameObject> object1, const glm::vec2& direction, std::shared_ptr<GameObject>object2, const std::function<void(CollisionResult)>& onEnter)
 {
-	const auto lineStart = object1->getTransform()->position;
-	const auto lineEnd = object1->getTransform()->position + object1->getCurrentDirection() * 100.0f;
+	auto lineStart = object1->getTransform()->position;
+	auto lineEnd = object1->getTransform()->position + direction * 100.0f;
 	// aabb
-	const auto boxWidth = object2->getWidth();
-	const int halfBoxWidth = boxWidth * 0.5f;
-	const auto boxHeight = object2->getHeight();
-	const int halfBoxHeight = boxHeight * 0.5f;
-	const auto boxStart = object2->getTransform()->position - glm::vec2(halfBoxWidth, halfBoxHeight);
+	auto boxWidth = object2->getWidth();
+	int halfBoxWidth = boxWidth * 0.5f;
+	auto boxHeight = object2->getHeight();
+	int halfBoxHeight = boxHeight * 0.5f;
+	auto boxStart = object2->getTransform()->position - glm::vec2(halfBoxWidth, halfBoxHeight);
 
 	if (lineRectCheck(lineStart, lineEnd, boxStart, boxWidth, boxHeight))
 	{
-		switch (object2->getType()) {
-		case TARGET:
-			std::cout << "Collision with Obstacle!" << std::endl;
-			SoundManager::Instance().playSound("yay", 0);
-
-			break;
-		default:
-			
-			break;
-		}
-
+		onCollision(object1, object2, onEnter);
 		return true;
+	}
+	else
+	{
+		object2->getRigidBody()->colliders[object1->getRigidBody()] = false;
+		object1->getRigidBody()->colliders[object2->getRigidBody()] = false;
 	}
 
 	return false;
@@ -214,96 +206,48 @@ int CollisionManager::circleAABBsquaredDistance(const glm::vec2 circle_centre, i
 	return (dx * dx) + (dy * dy);
 }
 
-bool CollisionManager::circleAABBCheck(GameObject* object1, GameObject* object2)
+CollisionResult CollisionManager::circleAABBCheck(std::shared_ptr<GameObject> circle, std::shared_ptr<GameObject> aabb, const std::function<void(CollisionResult)>& onEnter, bool centeredOrigin)
 {
-	// circle
-	const auto circleCentre = object1->getTransform()->position;
-	const int circleRadius = std::max(object1->getWidth() * 0.5f, object1->getHeight() * 0.5f);
-	// aabb
-	const auto boxWidth = object2->getWidth();
-	int halfBoxWidth = boxWidth * 0.5f;
-	const auto boxHeight = object2->getHeight();
-	int halfBoxHeight = boxHeight * 0.5f;
+	CollisionResult result;
+	float circleRadius = std::max(circle->getWidth() * 0.5f, circle->getHeight() * 0.5f);
+	glm::vec2 circleCenter = circle->getPosition();
+	glm::vec2 halfExt(aabb->getWidth() / 2.0f, aabb->getHeight() / 2.0f);
+	glm::vec2 aabbCenter = aabb->getPosition() + halfExt;
+	if (centeredOrigin) aabbCenter -= halfExt;
 
-	const auto boxStart = object2->getTransform()->position - glm::vec2(boxWidth * 0.5f, boxHeight * 0.5f);
+	glm::vec2 diff = circleCenter - aabbCenter;
+	glm::vec2 clamped = glm::clamp(diff, -halfExt, halfExt);
+	glm::vec2 closest = aabbCenter + clamped;
+	diff = closest - circleCenter;
 
-	if (circleAABBsquaredDistance(circleCentre, circleRadius, boxStart, boxWidth, boxHeight) <= (circleRadius * circleRadius))
+	if (glm::length(diff) < circleRadius)
 	{
-		if (!object2->getRigidBody()->isColliding) {
+		result.collided = true;
+		result.surfaceNormal = glm::vec2(clamped.y, -clamped.x);
+		result.penetration = circleRadius - glm::length(diff);
+		result.collisionPoint = closest;
 
-			object2->getRigidBody()->isColliding = true;
-
-			const auto attackVector = object1->getTransform()->position - object2->getTransform()->position;
-			const auto normal = glm::vec2(0.0f, -1.0f);
-
-			const auto dot = Util::dot(attackVector, normal);
-			const auto angle = acos(dot / Util::magnitude(attackVector)) * Util::Rad2Deg;
-
-			switch (object2->getType()) {
-			case TARGET:
-				std::cout << "Collision with Planet!" << std::endl;
-				SoundManager::Instance().playSound("yay", 0);
-				break;
-			case SHIP:
-				{
-					SoundManager::Instance().playSound("thunder", 0);
-					auto velocityX = object1->getRigidBody()->velocity.x;
-					auto velocityY = object1->getRigidBody()->velocity.y;
-
-					if ((attackVector.x > 0 && attackVector.y < 0) || (attackVector.x < 0 && attackVector.y < 0))
-						// top right or top left
-					{
-						
-						if (angle <= 45)
-						{
-							object1->getRigidBody()->velocity = glm::vec2(velocityX, -velocityY);
-						}
-						else
-						{
-							object1->getRigidBody()->velocity = glm::vec2(-velocityX, velocityY);
-						}
-					}
-
-					if ((attackVector.x > 0 && attackVector.y > 0) || (attackVector.x < 0 && attackVector.y > 0))
-						// bottom right or bottom left
-					{
-						if (angle <= 135)
-						{
-							object1->getRigidBody()->velocity = glm::vec2(-velocityX, velocityY);
-													}
-						else
-						{
-							object1->getRigidBody()->velocity = glm::vec2(velocityX, -velocityY);
-													}
-					}
-				}
-				
-
-				break;
-			default:
-				
-				break;
-			}
-
-			return true;
-		}
-		return false;
+		onCollision(circle, aabb, onEnter, result);
 	}
 	else
 	{
-		object2->getRigidBody()->isColliding = false;
-		return false;
+		result.collided = false;
+		result.surfaceNormal = glm::vec2(0.0f, 0.0f);
+		result.penetration = 0.0f;
+		result.collisionPoint = glm::vec2(0.0f, 0.0f);
+		circle->getRigidBody()->colliders[aabb->getRigidBody()] = false;
+		aabb->getRigidBody()->colliders[circle->getRigidBody()] = false;
 	}
 
-	return false;
+	return result;
 }
 
 bool CollisionManager::pointRectCheck(const glm::vec2 point, const glm::vec2 rect_start, const float rect_width, const float rect_height)
 {
-	const float topLeftX = rect_start.x - rect_width * 0.5;
-	const float topLeftY = rect_start.y - rect_height * 0.5;
-	const auto width = rect_width;
-	const auto height = rect_height;
+	float topLeftX = rect_start.x;
+	float topLeftY = rect_start.y;
+	auto width = rect_width;
+	auto height = rect_height;
 
 	if (point.x > topLeftX&&
 		point.x < topLeftX + width &&
