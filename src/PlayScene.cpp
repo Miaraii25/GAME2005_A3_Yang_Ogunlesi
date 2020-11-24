@@ -27,6 +27,27 @@ void PlayScene::draw()
 {
 	TextureManager::Instance()->draw("playscene", 400, 300, 0, 255, true);
 
+	//draw spawn zone
+	if (m_showSpawnZone)
+	{
+		glm::vec2 diff = m_bulletSpawnZone[1] - m_bulletSpawnZone[0];
+		Util::DrawRect(m_bulletSpawnZone[0], diff.x, diff.y, glm::vec4(1.0f, 0.0f, 0.0f, 0.5f));
+	}
+
+	if (m_drawPlayerCollision)
+	{
+		glm::vec2 origin = m_pPlayer->getPosition() - glm::vec2(m_pPlayer->getWidth()+2, m_pPlayer->getHeight()+2)/2.0f;
+		Util::DrawRect(origin, m_pPlayer->getWidth() + 1, m_pPlayer->getHeight() + 1);
+	}
+
+	if (m_drawBulletCollision)
+	{
+		for (auto b : m_bulletRain->getBullets())
+		{
+			Util::DrawCircle(b->getPosition(), b->getWidth()*0.5f + 1);
+		}
+	}
+
 	drawDisplayList();
 	SDL_SetRenderDrawColor(Renderer::Instance()->getRenderer(), 255, 255, 255, 255);
 
@@ -231,15 +252,14 @@ void PlayScene::GUI_Function()
 {
 	// Always open with a NewFrame
 	ImGui::NewFrame();
+		
+	ImGui::Begin("Scene Control", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar);
 
 	ImGui::Separator();
 
 	ImGui::Separator();
 
 	ImGui::End();
-
-	//render bullet info
-	ImGui::Begin("Bullets", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar);
 
 	ImGui::End();
 
