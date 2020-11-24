@@ -255,11 +255,85 @@ void PlayScene::GUI_Function()
 		
 	ImGui::Begin("Scene Control", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar);
 
+	const char* playStr = "> Play";
+	const char* pauseStr = "|| Pause";
+	const char* sceneStateStr = m_bulletRain->isPaused() ? playStr : pauseStr;
+
+	ImGui::Checkbox("Draw player collision", &m_drawPlayerCollision);
+	ImGui::Checkbox("Draw bullet collision", &m_drawBulletCollision);
+
+	if (ImGui::Button(sceneStateStr)) 
+	{
+		m_bulletRain->togglePause();
+	}
+
 	ImGui::Separator();
+
+	
+	const char* showStateStr = "Show spawn zone";
+	ImGui::Checkbox(showStateStr, &m_showSpawnZone);
+
+	bool moveSpawnZone = false;
+	
+	float spawnZoneWidth = m_bulletSpawnZone[1].x - m_bulletSpawnZone[0].x;
+	float spawnZoneHeight = m_bulletSpawnZone[1].y - m_bulletSpawnZone[0].y;
+
+	if (ImGui::SliderFloat("Bullet spawn zone X", &m_bulletSpawnZone[0].x, 0, (float)m_width))
+	{
+		moveSpawnZone = true;
+	}
+	if (ImGui::SliderFloat("Bullet spawn zone Y", &m_bulletSpawnZone[0].y, 0, (float)m_height))
+	{
+		moveSpawnZone = true;
+	}
+	if (ImGui::SliderFloat("Bullet spawn zone width", &spawnZoneWidth, 0, (float)m_width))
+	{
+		m_bulletSpawnZone[1].x = m_bulletSpawnZone[0].x + spawnZoneWidth;
+		moveSpawnZone = true;
+	}
+	if (ImGui::SliderFloat("Bullet spawn zone height", &spawnZoneHeight, 0, (float)m_height))
+	{
+		m_bulletSpawnZone[1].y = m_bulletSpawnZone[0].y + spawnZoneHeight;
+		moveSpawnZone = true;
+	}
+
+	if (moveSpawnZone)
+	{
+		m_bulletRain->setSpawnZone(m_bulletSpawnZone);
+	}
+
+	if (ImGui::SliderFloat("Bullet terminal velocity", &m_bulletTerminalVelocity.y, 0.0f, 1000.0f))
+	{
+		m_bulletRain->setTerminalVelocity(m_bulletTerminalVelocity);
+	}
 
 	ImGui::Separator();
 
 	ImGui::End();
+
+	//render bullet info
+	ImGui::Begin("Bullets", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar);
+
+	int bi = 0;
+	for (auto bullet : m_bulletRain->getBullets())
+	{
+		glm::vec2 bulletPos = bullet->getPosition();
+		glm::vec2 bulletVel = bullet->getVelocity();
+		std::string bulletStateStr = bullet->isPaused() ? playStr : pauseStr;
+		bulletStateStr.append(std::to_string(bi));
+
+		if (ImGui::Button(bulletStateStr.c_str()))
+		{
+			bullet->togglePause();
+		}
+		ImGui::Text("Position");
+		ImGui::Text("x: %f y: %f", bulletPos.x, bulletPos.y);
+		ImGui::Text("Velocity");
+		ImGui::Text("x: %f y: %f", bulletVel.x, bulletVel.y);
+		ImGui::Separator();
+
+		bi++;
+	}
 
 	ImGui::End();
 
