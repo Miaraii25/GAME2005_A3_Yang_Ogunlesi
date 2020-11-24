@@ -55,7 +55,12 @@ bool Game::init(const char* title, const int x, const int y, const int width, co
 			std::cout << "window creation success" << std::endl;
 
 			// create a new SDL Renderer and store it in the Singleton
-			const auto renderer = (Config::make_resource(SDL_CreateRenderer(m_pWindow.get(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)));
+			auto renderer = (Config::make_resource(SDL_CreateRenderer(m_pWindow.get(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)));
+			auto err = SDL_GetError();
+			
+			if(strlen(err) > 1)
+				renderer = (Config::make_resource(SDL_CreateRenderer(m_pWindow.get(), -1, SDL_RENDERER_SOFTWARE)));
+			
 			Renderer::Instance()->setRenderer(renderer);
 			
 			if (Renderer::Instance()->getRenderer() != nullptr) // render init success
@@ -187,14 +192,24 @@ void Game::render() const
 {
 	SDL_RenderClear(Renderer::Instance()->getRenderer()); // clear the renderer to the draw colour
 
-	m_currentScene->draw();
+	if (m_currentScene)
+	{
+			m_currentScene->draw();
+
+	}
+	//m_currentScene->draw();
 
 	SDL_RenderPresent(Renderer::Instance()->getRenderer()); // draw to the screen
 }
 
 void Game::update() const
 {
-	m_currentScene->update();
+	if (m_currentScene)
+	{
+		m_currentScene->update();
+	}
+	//m_currentScene->update();
+
 }
 
 void Game::clean() const
@@ -211,5 +226,11 @@ void Game::clean() const
 
 void Game::handleEvents()
 {
-	m_currentScene->handleEvents();
+	//m_currentScene->handleEvents();
+
+	if (m_currentScene)
+	{
+		m_currentScene->handleEvents();
+
+	}
 }

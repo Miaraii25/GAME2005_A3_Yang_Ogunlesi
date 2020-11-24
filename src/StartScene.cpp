@@ -4,7 +4,7 @@
 #include "glm/gtx/string_cast.hpp"
 #include "EventManager.h"
 
-StartScene::StartScene()
+StartScene::StartScene(const SceneState lastScene)
 {
 	StartScene::start();
 }
@@ -43,12 +43,12 @@ void StartScene::handleEvents()
 	EventManager::Instance().update();
 
 	// Keyboard Events
-	if(EventManager::Instance().isKeyDown(SDL_SCANCODE_ESCAPE))
+	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_ESCAPE))
 	{
 		TheGame::Instance()->quit();
 	}
 
-	if(EventManager::Instance().isKeyDown(SDL_SCANCODE_1))
+	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_1))
 	{
 		TheGame::Instance()->changeSceneState(PLAY_SCENE);
 	}
@@ -68,13 +68,17 @@ void StartScene::start()
 	m_pStartLabel->setParent(this);
 	addChild(m_pStartLabel);
 
-	m_pNameLabel = new Label(" YANG  (ID:101235517)","PinkChicken-Regular", 40, Orange, glm::vec2(400.0f, 180.0f));
+	m_pNameLabel = new Label(" YANG  (ID:101235517)", "PinkChicken-Regular", 40, Orange, glm::vec2(400.0f, 180.0f));
 	m_pNameLabel->setParent(this);
 	addChild(m_pNameLabel);
 
-	m_pNameLabel2 = new Label("OGUNLESI  (ID:101285729)","PinkChicken-Regular", 40, Orange, glm::vec2(400.0f, 230.0f));
+	m_pNameLabel2 = new Label("OGUNLESI  (ID:101285729)", "PinkChicken-Regular", 40, Orange, glm::vec2(400.0f, 230.0f));
 	m_pNameLabel2->setParent(this);
 	addChild(m_pNameLabel2);
+
+	m_pNameLabel3 = new Label("Aroshabel   (ID:101156682)", "PinkChicken-Regular", 40, Orange, glm::vec2(400.0f, 230.0f));
+	m_pNameLabel3->setParent(this);
+	addChild(m_pNameLabel3);
 
 	m_pScene1Label = new Label("SCENE ONE", "lazy", 16, Orange, glm::vec2(400.0f, 260.0f));
 	m_pScene1Label->setParent(this);
@@ -86,29 +90,29 @@ void StartScene::start()
 
 
 	/*m_pShip = new Ship();
-	m_pShip->getTransform()->position = glm::vec2(400.0f, 300.0f); 
+	m_pShip->getTransform()->position = glm::vec2(400.0f, 300.0f);
 	addChild(m_pShip); */
 
 	// Start Button
 	m_pStartLevel1Button = new Button();
-	m_pStartLevel1Button->getTransform()->position = glm::vec2(400.0f, 320.0f); 
+	m_pStartLevel1Button->getTransform()->position = glm::vec2(400.0f, 320.0f);
 
 	m_pStartLevel1Button->addEventListener(CLICK, [&]()-> void
-	{
-		m_pStartLevel1Button->setActive(false);
-		m_nextScene = PLAY_SCENE;
-		m_willChange = true;
-	});
-	
+		{
+			m_pStartLevel1Button->setActive(false);
+			m_nextScene = PLAY_SCENE;
+			m_willChange = true;
+		});
+
 	m_pStartLevel1Button->addEventListener(MOUSE_OVER, [&]()->void
-	{
-		m_pStartLevel1Button->setAlpha(128);
-	});
+		{
+			m_pStartLevel1Button->setAlpha(128);
+		});
 
 	m_pStartLevel1Button->addEventListener(MOUSE_OUT, [&]()->void
-	{
-		m_pStartLevel1Button->setAlpha(255);
-	});
+		{
+			m_pStartLevel1Button->setAlpha(255);
+		});
 	addChild(m_pStartLevel1Button);
 
 	//level 2 button

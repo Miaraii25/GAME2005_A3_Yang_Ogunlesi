@@ -7,7 +7,6 @@
 class Target final : public DisplayObject {
 public:
 	Target();
-	Target(const Target& other);
 	~Target();
 
 	// Inherited via GameObject
@@ -25,7 +24,7 @@ public:
 	void resetImage(const std::string& textureName, const std::string& texturePath);
 	bool AtRest() { return m_atRest; }
 	void WakeUp() { m_atRest = true; }
-	
+
 private:
 	void m_move();
 	void m_checkBounds();

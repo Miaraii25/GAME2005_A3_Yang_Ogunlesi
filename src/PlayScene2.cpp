@@ -322,27 +322,26 @@ void PlayScene2::start()
 	m_pBackButton = std::make_shared<Button>("../Assets/textures/backButton.png", "backButton", BACK_BUTTON);
 	m_pBackButton->getTransform()->position = glm::vec2(100.0f, 550.0f);
 	m_pBackButton->addEventListener(CLICK, [&]()-> void
-		{
+	{
 			m_pBackButton->setActive(false);
 			m_nextScene = m_lastScene;
 			m_willChange = true;
-		});
+	});
 
 	m_pBackButton->addEventListener(MOUSE_OVER, [&]()->void { m_pBackButton->setAlpha(128); });
 
 	m_pBackButton->addEventListener(MOUSE_OUT, [&]()->void { m_pBackButton->setAlpha(255); });
-
-	addChild(m_pBackButton.get(), 0, std::nullopt, false);
+    addChild(m_pBackButton.get(), 0, std::nullopt, false);
 
 	// Next Button
 	m_pNextButton = std::make_shared<Button>("../Assets/textures/nextButton.png", "nextButton", NEXT_BUTTON);
 	m_pNextButton->getTransform()->position = glm::vec2(TheGame::Instance()->getWindowWidth() - 100.0f, 550.0f);
 	m_pNextButton->addEventListener(CLICK, [&]()-> void
-		{
+	{
 			m_pNextButton->setActive(false);
 			m_nextScene = PLAY_SCENE_2;
 			m_willChange = true;
-		});
+	});
 
 	m_pNextButton->addEventListener(MOUSE_OVER, [&]()->void { m_pNextButton->setAlpha(128); });
 

@@ -67,12 +67,12 @@ private:
 	int m_windowHeight;
 
 	// scene variables
-	Scene* m_currentScene;
+	Scene*m_currentScene;
 	SceneState m_currentSceneState;
 
 	// storage structures
 	std::shared_ptr<SDL_Window> m_pWindow;
-	static Game* s_pInstance;
+	static Game*s_pInstance;
 };
 
 typedef Game TheGame;

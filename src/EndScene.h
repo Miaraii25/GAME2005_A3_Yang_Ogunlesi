@@ -9,21 +9,21 @@
 
 class EndScene final : public Scene
 {
-	public:
-		EndScene(const SceneState lastScene);
-		~EndScene();
+public:
+	EndScene(const SceneState lastScene);
+	~EndScene();
 
-		// Inherited via Scene
-		virtual void draw() override;
-		virtual void update() override;
-		virtual void clean() override;
-		virtual void handleEvents() override;
-		virtual void start() override;
+	// Inherited via Scene
+	virtual void draw() override;
+	virtual void update() override;
+	virtual void clean() override;
+	virtual void handleEvents() override;
+	virtual void start() override;
 
-	private:
-		Label* m_label{};
+private:
+	Label* m_label{};
 
-		Button* m_pRestartButton;
+	Button* m_pRestartButton;
 };
 
 #endif /* defined (__END_SCENE__) */
