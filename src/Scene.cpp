@@ -7,13 +7,18 @@
 Scene::Scene()
 = default;
 
+Scene::Scene(const SceneState lastScene)
+{
+	m_lastScene = lastScene;
+}
+
 Scene::~Scene()
 {
 	removeAllChildren();
 }
 
 
-void Scene::addChild(DisplayObject * child, uint32_t layer_index, std::optional<uint32_t> order_index)
+void Scene::addChild(DisplayObject * child, uint32_t layer_index, std::optional<uint32_t> order_index, bool canDelete)
 {
 	uint32_t index = 0;
 	// If we passed in an order index, override the auto-increment value
@@ -29,23 +34,32 @@ void Scene::addChild(DisplayObject * child, uint32_t layer_index, std::optional<
 	child->setLayerIndex(layer_index, index);
 	child->m_pParentScene = this;
 	m_displayList.push_back(child);
+	if (canDelete)
+	{
+		m_deleteList.push_back(child);
+	}
 }
 
 void Scene::removeChild(DisplayObject* child)
 {
-	delete child;
+	if (std::find(m_deleteList.begin(), m_deleteList.end(), child) != m_deleteList.end())
+	{
+		delete child;
+		m_deleteList.erase(std::remove(m_deleteList.begin(), m_deleteList.end(), child), m_deleteList.end());
+	}
 	m_displayList.erase(std::remove(m_displayList.begin(), m_displayList.end(), child), m_displayList.end());
 }
 
 void Scene::removeAllChildren()
 {
-	for (auto& count : m_displayList)
+	for (auto& count : m_deleteList)
 	{
 		delete count;
 		count = nullptr;
 	}
 
 	m_displayList.clear();
+	m_deleteList.clear();
 }
 
 

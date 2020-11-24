@@ -7,11 +7,14 @@
 #include "Player.h"
 #include "Button.h"
 #include "Label.h"
+#include "Target.h"
+#include "BulletRain.h"
 
 class PlayScene : public Scene
 {
 public:
 	PlayScene();
+	PlayScene(SceneState lastScene);
 	~PlayScene();
 
 	// Scene LifeCycle Functions
@@ -20,21 +23,34 @@ public:
 	virtual void clean() override;
 	virtual void handleEvents() override;
 	virtual void start() override;
-private:
-	// IMGUI Function
-	void GUI_Function() const;
-	std::string m_guiTitle;
-	
-	glm::vec2 m_mousePosition;
 
-	Plane* m_pPlaneSprite;
-	Player* m_pPlayer;
+private:
+	
+
+	// IMGUI Function
+	void GUI_Function();
+	std::string m_guiTitle;
+	bool m_showSpawnZone;
+	bool m_drawPlayerCollision;
+	bool m_drawBulletCollision;
+
+	glm::vec2 m_playZone[2];
+	glm::vec2 m_bulletSpawnZone[2];
+	std::shared_ptr<BulletRain> m_bulletRain;
+
+	std::shared_ptr<Player> m_pPlayer;
 	bool m_playerFacingRight;
 
+	glm::vec2 m_bulletTerminalVelocity;
+
+	bool m_bPlayerHasLOS;
+
 	// UI Items
-	Button* m_pBackButton;
-	Button* m_pNextButton;
-	Label* m_pInstructionsLabel;
+	std::shared_ptr<Button> m_pBackButton;
+	std::shared_ptr<Button> m_pNextButton;
+	std::shared_ptr<Label> m_pInstructionsLabel;
+
+	unsigned int m_frameCount;
 };
 
 #endif /* defined (__PLAY_SCENE__) */

@@ -1,8 +1,24 @@
 #include "GameObject.h"
 
 GameObject::GameObject():
-	m_width(0), m_height(0), m_type(NONE), m_enabled(true)
+	m_width(0), m_height(0), m_type(NONE), m_enabled(true), m_paused(false)
 {
+}
+
+GameObject::GameObject(const GameObject& other)
+{
+	m_transform = other.m_transform;
+
+	// rigid body component
+	m_rigidBody = other.m_rigidBody;
+
+	// size variables
+	m_width = other.m_width;
+	m_height = other.m_height;
+	m_type = other.m_type;
+
+	m_enabled = other.m_enabled;
+	m_paused = other.m_paused;
 }
 
 GameObject::~GameObject()

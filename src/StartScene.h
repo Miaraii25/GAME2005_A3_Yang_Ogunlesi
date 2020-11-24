@@ -11,6 +11,7 @@ class StartScene final : public Scene
 {
 public:
 	StartScene();
+	StartScene(const SceneState lastScene);
 	~StartScene();
 
 	// Inherited via Scene
@@ -22,11 +23,16 @@ public:
 	
 private:
 	Label* m_pStartLabel{};
-	Label* m_pInstructionsLabel{};
+	Label* m_pNameLabel{};
+	Label* m_pNameLabel2{};
 
-	Ship* m_pShip{};
+	Label* m_pScene1Label{};
+	Label* m_pScene2Label{};
+	
+	//Ship* m_pShip{};
 
-	Button* m_pStartButton;
+	Button* m_pStartLevel1Button;
+	Button* m_pStartLevel2Button;
 };
 
 #endif /* defined (__START_SCENE__) */

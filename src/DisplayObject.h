@@ -9,6 +9,7 @@ class DisplayObject : public GameObject
 {
 public:
 	DisplayObject();
+	DisplayObject(const DisplayObject& other);
 	virtual ~DisplayObject();
 
 	// Inherited via GameObject
@@ -41,6 +42,10 @@ private:
 	uint32_t m_layerIndex = 0;
 	uint32_t m_layerOrderIndex;
 	Scene* m_pParentScene{};
+
+protected:
+	std::string m_textureName;
+	std::string m_texturePath;
 };
 
 #endif /* defined (__DISPLAY_OBJECT__) */

@@ -1,6 +1,8 @@
 #include "PlayScene.h"
 #include "Game.h"
 #include "EventManager.h"
+#include "Util.h"
+#include <algorithm>
 
 // required for IMGUI
 #include "imgui.h"
@@ -12,23 +14,54 @@ PlayScene::PlayScene()
 	PlayScene::start();
 }
 
+PlayScene::PlayScene(SceneState lastScene)
+	: PlayScene()
+{
+	m_lastScene = lastScene;
+}
+
 PlayScene::~PlayScene()
 = default;
 
 void PlayScene::draw()
 {
-	if(EventManager::Instance().isIMGUIActive())
-	{
-		GUI_Function();
-	}
+	TextureManager::Instance()->draw("playscene", 400, 300, 0, 255, true);
 
 	drawDisplayList();
 	SDL_SetRenderDrawColor(Renderer::Instance()->getRenderer(), 255, 255, 255, 255);
+
+	if (EventManager::Instance().isIMGUIActive())
+	{
+		GUI_Function();
+	}
 }
 
 void PlayScene::update()
 {
+	//physics checks first
+
+	for (auto bullet : m_bulletRain->getBullets())
+	{
+		if (CollisionManager::squaredRadiusCheck(bullet, m_pPlayer, [](CollisionResult) -> void { SoundManager::Instance().playSound("thunder"); }))
+		{
+		}
+	}
+
+	glm::vec2 oldPlayerPos = m_pPlayer->getPosition();
+
 	updateDisplayList();
+
+	//if the player is outside the play area move them back in
+	glm::vec2 disp = m_playZone[1] - m_playZone[0];
+	if (!CollisionManager::pointRectCheck(m_pPlayer->getPosition(), m_playZone[0], disp.x, disp.y))
+	{
+		m_pPlayer->getTransform()->position = oldPlayerPos;
+	}
+
+	if (m_willChange)
+	{
+		TheGame::Instance()->changeSceneState(m_nextScene);
+	}
 }
 
 void PlayScene::clean()
@@ -116,93 +149,101 @@ void PlayScene::handleEvents()
 
 void PlayScene::start()
 {
+	// Load background
+	TextureManager::Instance()->load("../Assets/backgrounds/playscene.png", "playscene");
+
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
+	m_frameCount = 0;
+
+	//set up the bullet rain
+	Target templateTarget;
+	templateTarget.getRigidBody()->mass = 12.8f;
+	templateTarget.Gravity = 9.81f;
+
+	m_width = TheGame::Instance()->getWindowWidth();
+	m_height = TheGame::Instance()->getWindowHeight();
+
+	m_bulletSpawnZone[0] = { 0.0f, 0.0f };
+	m_bulletSpawnZone[1] = { m_width, m_height / 8 };
 	
-	// Plane Sprite
-	m_pPlaneSprite = new Plane();
-	addChild(m_pPlaneSprite);
+	m_playZone[0] = { 0.0f, 0.0f };
+	m_playZone[1] = { m_width, m_height };
+
+	m_bulletTerminalVelocity = { 0.0f, 200.0f };
+	m_bulletRain = std::make_shared<BulletRain>(10, &templateTarget, glm::vec2(0.0f, 0.0f), m_bulletSpawnZone, m_playZone, true);
+	m_bulletRain->setTerminalVelocity(m_bulletTerminalVelocity);
+
+	for (auto bullet : m_bulletRain->getBullets())
+	{
+		DisplayObject* d = static_cast<DisplayObject*>(bullet.get());
+		addChild(d, 0, std::nullopt, false);
+	}
+
+	DisplayObject* d = static_cast<DisplayObject*>(m_bulletRain.get());
+	addChild(d, 0, std::nullopt, false);
 
 	// Player Sprite
-	m_pPlayer = new Player();
-	addChild(m_pPlayer);
+	m_pPlayer = std::make_shared<Player>();
+	addChild(m_pPlayer.get(), 0, std::nullopt, false);
 	m_playerFacingRight = true;
 
-	// Back Button
-	m_pBackButton = new Button("../Assets/textures/backButton.png", "backButton", BACK_BUTTON);
-	m_pBackButton->getTransform()->position = glm::vec2(300.0f, 400.0f);
+	//// Back Button
+	m_pBackButton = std::make_shared<Button>("../Assets/textures/backButton.png", "backButton", BACK_BUTTON);
+	m_pBackButton->getTransform()->position = glm::vec2(100.0f, 550.0f);
 	m_pBackButton->addEventListener(CLICK, [&]()-> void
 	{
 		m_pBackButton->setActive(false);
-		TheGame::Instance()->changeSceneState(START_SCENE);
+		m_nextScene = m_lastScene;
+		m_willChange = true;
 	});
 
-	m_pBackButton->addEventListener(MOUSE_OVER, [&]()->void
-	{
-		m_pBackButton->setAlpha(128);
-	});
+	m_pBackButton->addEventListener(MOUSE_OVER, [&]()->void { m_pBackButton->setAlpha(128); });
 
-	m_pBackButton->addEventListener(MOUSE_OUT, [&]()->void
-	{
-		m_pBackButton->setAlpha(255);
-	});
-	addChild(m_pBackButton);
+	m_pBackButton->addEventListener(MOUSE_OUT, [&]()->void { m_pBackButton->setAlpha(255); });
+	
+	addChild(m_pBackButton.get(), 0, std::nullopt, false);
 
 	// Next Button
-	m_pNextButton = new Button("../Assets/textures/nextButton.png", "nextButton", NEXT_BUTTON);
-	m_pNextButton->getTransform()->position = glm::vec2(500.0f, 400.0f);
+	m_pNextButton = std::make_shared<Button>("../Assets/textures/nextButton.png", "nextButton", NEXT_BUTTON);
+	m_pNextButton->getTransform()->position = glm::vec2(TheGame::Instance()->getWindowWidth() - 100.0f, 550.0f);
 	m_pNextButton->addEventListener(CLICK, [&]()-> void
 	{
 		m_pNextButton->setActive(false);
-		TheGame::Instance()->changeSceneState(END_SCENE);
+		m_nextScene = PLAY_SCENE_2;
+		m_willChange = true;
 	});
 
-	m_pNextButton->addEventListener(MOUSE_OVER, [&]()->void
-	{
-		m_pNextButton->setAlpha(128);
-	});
+	m_pNextButton->addEventListener(MOUSE_OVER, [&]()->void { m_pNextButton->setAlpha(128); });
 
-	m_pNextButton->addEventListener(MOUSE_OUT, [&]()->void
-	{
-		m_pNextButton->setAlpha(255);
-	});
+	m_pNextButton->addEventListener(MOUSE_OUT, [&]()->void { m_pNextButton->setAlpha(255); });
 
-	addChild(m_pNextButton);
+	addChild(m_pNextButton.get(), 0, std::nullopt, false);
 
 	/* Instructions Label */
-	m_pInstructionsLabel = new Label("Press the backtick (`) character to toggle Debug View", "Consolas");
+	const SDL_Color Gold = { 212,175, 55, 0 };
+	m_pInstructionsLabel = std::make_shared<Label>("Press the backtick (`) character to toggle Debug View", "Consolas", 20, Gold);
 	m_pInstructionsLabel->getTransform()->position = glm::vec2(Config::SCREEN_WIDTH * 0.5f, 500.0f);
-
-	addChild(m_pInstructionsLabel);
+	addChild(m_pInstructionsLabel.get(), 0, std::nullopt, false);
 }
 
-void PlayScene::GUI_Function() const
+void PlayScene::GUI_Function() 
 {
 	// Always open with a NewFrame
 	ImGui::NewFrame();
 
-	// See examples by uncommenting the following - also look at imgui_demo.cpp in the IMGUI filter
-	//ImGui::ShowDemoWindow();
-	
-	ImGui::Begin("Your Window Title Goes Here", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar);
-
-	if(ImGui::Button("My Button"))
-	{
-		std::cout << "My Button Pressed" << std::endl;
-	}
+	ImGui::Separator();
 
 	ImGui::Separator();
 
-	static float float3[3] = { 0.0f, 1.0f, 1.5f };
-	if(ImGui::SliderFloat3("My Slider", float3, 0.0f, 2.0f))
-	{
-		std::cout << float3[0] << std::endl;
-		std::cout << float3[1] << std::endl;
-		std::cout << float3[2] << std::endl;
-		std::cout << "---------------------------\n";
-	}
-	
 	ImGui::End();
+
+	//render bullet info
+	ImGui::Begin("Bullets", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar);
+
+	ImGui::End();
+
+	ImGui::EndFrame();
 
 	// Don't Remove this
 	ImGui::Render();
