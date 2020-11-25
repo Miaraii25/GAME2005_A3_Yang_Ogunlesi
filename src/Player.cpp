@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "TextureManager.h"
 
-Player::Player(): m_currentAnimationState(PLAYER_IDLE_RIGHT)
+Player::Player() 
 {
 	TextureManager::Instance()->loadSpriteSheet(
 		"../Assets/sprites/atlas.txt",
@@ -16,10 +16,14 @@ Player::Player(): m_currentAnimationState(PLAYER_IDLE_RIGHT)
 	// set frame height
 	setHeight(58);
 
-	getTransform()->position = glm::vec2(400.0f, 300.0f);
+	m_currentAnimationState = PLAYER_IDLE_RIGHT;
+	m_lastAnimState = m_currentAnimationState;
+	m_accelerationRate = glm::vec2(4.0f, 30.0f);
+	m_moveSpeed = glm::vec2(5.0f, 40.0f);
+	m_frictionFactor = 0.8f;
+	getTransform()->position = glm::vec2(400.0f, 435.0f);
 	getRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
 	getRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);
-	getRigidBody()->isColliding = false;
 	setType(PLAYER);
 
 	m_buildAnimations();
@@ -56,11 +60,51 @@ void Player::draw()
 	default:
 		break;
 	}
-	
+	m_lastAnimState = m_currentAnimationState;
 }
 
 void Player::update()
 {
+	float deltaTime = 1.0f / 60.0f;
+
+	bool applyFriction = false;
+	// move the player according to animation state
+	//it is possible to adjust this to stop the player from skidding when you switch from one direction to the other
+	//but skidding is fun...
+	switch (m_currentAnimationState)
+	{
+	case PLAYER_RUN_RIGHT:
+		getRigidBody()->acceleration = glm::vec2(m_accelerationRate.x, 0.0f);
+		break;
+	case PLAYER_RUN_LEFT:
+		getRigidBody()->acceleration = glm::vec2(-m_accelerationRate.x, 0.0f);
+		break;
+	default:
+		applyFriction = true;
+		getRigidBody()->acceleration = glm::vec2();
+	}
+
+	getRigidBody()->velocity += getRigidBody()->acceleration * deltaTime;
+
+	if (getRigidBody()->velocity.x < -0.05)
+	{
+		getRigidBody()->velocity.x = fmax(getRigidBody()->velocity.x, -m_moveSpeed.x);
+	}
+	else if (getRigidBody()->velocity.x > 0.05)
+	{
+		getRigidBody()->velocity.x = fmin(getRigidBody()->velocity.x, m_moveSpeed.x);
+	}
+	else
+	{
+		getRigidBody()->velocity.x = 0.0f;	//stop any micro movements
+	}
+
+	getTransform()->position += getRigidBody()->velocity;
+
+	if (applyFriction)
+	{
+		getRigidBody()->velocity *= m_frictionFactor;
+	}
 }
 
 void Player::clean()

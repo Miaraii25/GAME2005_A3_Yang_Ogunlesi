@@ -3,6 +3,17 @@
 DisplayObject::DisplayObject()
 = default;
 
+DisplayObject::DisplayObject(const DisplayObject & other)
+	: GameObject(other)
+{
+	m_layerIndex = other.m_layerIndex;
+	m_layerOrderIndex = other.m_layerOrderIndex;
+	m_pParentScene = other.m_pParentScene;
+
+	m_textureName = other.m_textureName;
+	m_texturePath = other.m_texturePath;
+}
+
 DisplayObject::~DisplayObject()
 = default;
 

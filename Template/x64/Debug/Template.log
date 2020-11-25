@@ -1,0 +1,66 @@
+﻿  imgui_sdl.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\include\IMGUI_SDL\imgui_sdl.cpp(3,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  BulletRain.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\Transform.h(4,10): fatal error C1083: Cannot open include file: 'glm/vec2.hpp': No such file or directory
+  Button.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\Transform.h(4,10): fatal error C1083: Cannot open include file: 'glm/vec2.hpp': No such file or directory
+  CollisionManager.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\Transform.h(4,10): fatal error C1083: Cannot open include file: 'glm/vec2.hpp': No such file or directory
+  Helicopter.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\Transform.h(4,10): fatal error C1083: Cannot open include file: 'glm/vec2.hpp': No such file or directory
+  PlayScene2.cpp
+  The contents of <optional> are available only with C++17 or later.
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\Transform.h(4,10): fatal error C1083: Cannot open include file: 'glm/vec2.hpp': No such file or directory
+  Sprite.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\Transform.h(4,10): fatal error C1083: Cannot open include file: 'glm/vec2.hpp': No such file or directory
+  UIControl.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\Transform.h(4,10): fatal error C1083: Cannot open include file: 'glm/vec2.hpp': No such file or directory
+  DisplayObject.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\Transform.h(4,10): fatal error C1083: Cannot open include file: 'glm/vec2.hpp': No such file or directory
+  EndScene.cpp
+  The contents of <optional> are available only with C++17 or later.
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\Transform.h(4,10): fatal error C1083: Cannot open include file: 'glm/vec2.hpp': No such file or directory
+  FontManager.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\FontManager.h(11,9): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  Game.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\Game.h(11,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  GameController.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\GameController.h(5,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  GameObject.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\Transform.h(4,10): fatal error C1083: Cannot open include file: 'glm/vec2.hpp': No such file or directory
+  Label.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\Transform.h(4,10): fatal error C1083: Cannot open include file: 'glm/vec2.hpp': No such file or directory
+  PlayScene.cpp
+  The contents of <optional> are available only with C++17 or later.
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\Transform.h(4,10): fatal error C1083: Cannot open include file: 'glm/vec2.hpp': No such file or directory
+  main.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\Game.h(11,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  Plane.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\Transform.h(4,10): fatal error C1083: Cannot open include file: 'glm/vec2.hpp': No such file or directory
+  Player.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\Transform.h(4,10): fatal error C1083: Cannot open include file: 'glm/vec2.hpp': No such file or directory
+  Renderer.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\Renderer.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  Generating Code...
+  Compiling...
+  Scene.cpp
+  The contents of <optional> are available only with C++17 or later.
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\Transform.h(4,10): fatal error C1083: Cannot open include file: 'glm/vec2.hpp': No such file or directory
+  ship.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\Transform.h(4,10): fatal error C1083: Cannot open include file: 'glm/vec2.hpp': No such file or directory
+  SoundManager.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\SoundManager.h(12,10): fatal error C1083: Cannot open include file: 'SDL_mixer.h': No such file or directory
+  EventManager.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\EventManager.h(5,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  SpriteSheet.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\SpriteSheet.h(7,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  StartScene.cpp
+  The contents of <optional> are available only with C++17 or later.
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\Transform.h(4,10): fatal error C1083: Cannot open include file: 'glm/vec2.hpp': No such file or directory
+  Target.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\Transform.h(4,10): fatal error C1083: Cannot open include file: 'glm/vec2.hpp': No such file or directory
+  TextureManager.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\TextureManager.h(10,10): fatal error C1083: Cannot open include file: 'glm/vec2.hpp': No such file or directory
+  Util.cpp
+C:\dev\work\Arzaan\SDL\GAME2005_A2_Yang_Ogunlesi\src\Util.h(5,10): fatal error C1083: Cannot open include file: 'GLM/vec2.hpp': No such file or directory
+  Generating Code...

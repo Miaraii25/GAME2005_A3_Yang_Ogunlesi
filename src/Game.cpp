@@ -32,6 +32,8 @@ void Game::init()
 
 bool Game::init(const char* title, const int x, const int y, const int width, const int height, const bool fullscreen)
 {
+	m_windowWidth = width;
+	m_windowHeight = height;
 	auto flags = 0;
 
 	if (fullscreen)
@@ -129,7 +131,8 @@ Uint32 Game::getFrames() const
 
 void Game::changeSceneState(const SceneState new_state)
 {
-	if (new_state != m_currentSceneState) {
+	if (new_state != m_currentSceneState) 
+	{
 
 		// scene clean up
 		if (m_currentSceneState != NO_SCENE) 
@@ -144,6 +147,7 @@ void Game::changeSceneState(const SceneState new_state)
 
 		m_currentScene = nullptr;
 
+		SceneState oldState = m_currentSceneState;
 		m_currentSceneState = new_state;
 
 		EventManager::Instance().reset();
@@ -158,8 +162,12 @@ void Game::changeSceneState(const SceneState new_state)
 			m_currentScene = new PlayScene();
 			std::cout << "play scene activated" << std::endl;
 			break;
+		case PLAY_SCENE_2:
+			m_currentScene = new PlayScene2();
+			std::cout << "play scene 2 activated" << std::endl;
+			break;
 		case END_SCENE:
-			m_currentScene = new EndScene();
+			m_currentScene = new EndScene(oldState);
 			std::cout << "end scene activated" << std::endl;
 			break;
 		default:

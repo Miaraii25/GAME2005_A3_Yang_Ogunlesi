@@ -1,3 +1,6 @@
+#pragma once
+#ifndef __main__
+#define __main__
 // Core Libraries
 #include <crtdbg.h>
 #include <iostream>
@@ -13,13 +16,12 @@ int main(int argc, char * args[])
 	Uint32 frameStart, frameTime;
 	UINT32 frames = 0;
 
-
 	// show console
 	AllocConsole();
 	freopen("CON", "w", stdout);
 
-
 	TheGame::Instance()->init("SDLEngine 0.24", 100, 100, 800, 600, false);
+	SoundManager::Instance().init();
 
 	while (TheGame::Instance()->isRunning())
 	{
@@ -44,3 +46,4 @@ int main(int argc, char * args[])
 	return 0;
 }
 
+#endif

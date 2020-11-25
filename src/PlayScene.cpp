@@ -1,6 +1,8 @@
 #include "PlayScene.h"
 #include "Game.h"
 #include "EventManager.h"
+#include "Util.h"
+#include <algorithm>
 
 // required for IMGUI
 #include "imgui.h"
@@ -12,23 +14,75 @@ PlayScene::PlayScene()
 	PlayScene::start();
 }
 
+PlayScene::PlayScene(SceneState lastScene)
+	: PlayScene()
+{
+	m_lastScene = lastScene;
+}
+
 PlayScene::~PlayScene()
 = default;
 
 void PlayScene::draw()
 {
-	if(EventManager::Instance().isIMGUIActive())
+	TextureManager::Instance()->draw("playscene", 400, 300, 0, 255, true);
+
+	//draw spawn zone
+	if (m_showSpawnZone)
 	{
-		GUI_Function();
+		glm::vec2 diff = m_bulletSpawnZone[1] - m_bulletSpawnZone[0];
+		Util::DrawRect(m_bulletSpawnZone[0], diff.x, diff.y, glm::vec4(1.0f, 0.0f, 0.0f, 0.5f));
+	}
+
+	if (m_drawPlayerCollision)
+	{
+		glm::vec2 origin = m_pPlayer->getPosition() - glm::vec2(m_pPlayer->getWidth()+2, m_pPlayer->getHeight()+2)/2.0f;
+		Util::DrawRect(origin, m_pPlayer->getWidth() + 1, m_pPlayer->getHeight() + 1);
+	}
+
+	if (m_drawBulletCollision)
+	{
+		for (auto b : m_bulletRain->getBullets())
+		{
+			Util::DrawCircle(b->getPosition(), b->getWidth()*0.5f + 1);
+		}
 	}
 
 	drawDisplayList();
 	SDL_SetRenderDrawColor(Renderer::Instance()->getRenderer(), 255, 255, 255, 255);
+
+	if (EventManager::Instance().isIMGUIActive())
+	{
+		GUI_Function();
+	}
 }
 
 void PlayScene::update()
 {
+	//physics checks first
+
+	for (auto bullet : m_bulletRain->getBullets())
+	{
+		if (CollisionManager::squaredRadiusCheck(bullet, m_pPlayer, [](CollisionResult) -> void { SoundManager::Instance().playSound("thunder"); }))
+		{
+		}
+	}
+
+	glm::vec2 oldPlayerPos = m_pPlayer->getPosition();
+
 	updateDisplayList();
+
+	//if the player is outside the play area move them back in
+	glm::vec2 disp = m_playZone[1] - m_playZone[0];
+	if (!CollisionManager::pointRectCheck(m_pPlayer->getPosition(), m_playZone[0], disp.x, disp.y))
+	{
+		m_pPlayer->getTransform()->position = oldPlayerPos;
+	}
+
+	if (m_willChange)
+	{
+		TheGame::Instance()->changeSceneState(m_nextScene);
+	}
 }
 
 void PlayScene::clean()
@@ -116,93 +170,174 @@ void PlayScene::handleEvents()
 
 void PlayScene::start()
 {
+	// Load background
+	TextureManager::Instance()->load("../Assets/backgrounds/playscene.png", "playscene");
+
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
+	m_frameCount = 0;
+
+	//set up the bullet rain
+	Target templateTarget;
+	templateTarget.getRigidBody()->mass = 12.8f;
+	templateTarget.Gravity = 9.81f;
+
+	m_width = TheGame::Instance()->getWindowWidth();
+	m_height = TheGame::Instance()->getWindowHeight();
+
+	m_bulletSpawnZone[0] = { 0.0f, 0.0f };
+	m_bulletSpawnZone[1] = { m_width, m_height / 8 };
 	
-	// Plane Sprite
-	m_pPlaneSprite = new Plane();
-	addChild(m_pPlaneSprite);
+	m_playZone[0] = { 0.0f, 0.0f };
+	m_playZone[1] = { m_width, m_height };
+
+	m_bulletTerminalVelocity = { 0.0f, 200.0f };
+	m_bulletRain = std::make_shared<BulletRain>(10, &templateTarget, glm::vec2(0.0f, 0.0f), m_bulletSpawnZone, m_playZone, true);
+	m_bulletRain->setTerminalVelocity(m_bulletTerminalVelocity);
+
+	for (auto bullet : m_bulletRain->getBullets())
+	{
+		DisplayObject* d = static_cast<DisplayObject*>(bullet.get());
+		addChild(d, 0, std::nullopt, false);
+	}
+
+	DisplayObject* d = static_cast<DisplayObject*>(m_bulletRain.get());
+	addChild(d, 0, std::nullopt, false);
 
 	// Player Sprite
-	m_pPlayer = new Player();
-	addChild(m_pPlayer);
+	m_pPlayer = std::make_shared<Player>();
+	addChild(m_pPlayer.get(), 0, std::nullopt, false);
 	m_playerFacingRight = true;
 
-	// Back Button
-	m_pBackButton = new Button("../Assets/textures/backButton.png", "backButton", BACK_BUTTON);
-	m_pBackButton->getTransform()->position = glm::vec2(300.0f, 400.0f);
+	//// Back Button
+	m_pBackButton = std::make_shared<Button>("../Assets/textures/backButton.png", "backButton", BACK_BUTTON);
+	m_pBackButton->getTransform()->position = glm::vec2(100.0f, 550.0f);
 	m_pBackButton->addEventListener(CLICK, [&]()-> void
 	{
 		m_pBackButton->setActive(false);
-		TheGame::Instance()->changeSceneState(START_SCENE);
+		m_nextScene = m_lastScene;
+		m_willChange = true;
 	});
 
-	m_pBackButton->addEventListener(MOUSE_OVER, [&]()->void
-	{
-		m_pBackButton->setAlpha(128);
-	});
+	m_pBackButton->addEventListener(MOUSE_OVER, [&]()->void { m_pBackButton->setAlpha(128); });
 
-	m_pBackButton->addEventListener(MOUSE_OUT, [&]()->void
-	{
-		m_pBackButton->setAlpha(255);
-	});
-	addChild(m_pBackButton);
+	m_pBackButton->addEventListener(MOUSE_OUT, [&]()->void { m_pBackButton->setAlpha(255); });
+	
+	addChild(m_pBackButton.get(), 0, std::nullopt, false);
 
 	// Next Button
-	m_pNextButton = new Button("../Assets/textures/nextButton.png", "nextButton", NEXT_BUTTON);
-	m_pNextButton->getTransform()->position = glm::vec2(500.0f, 400.0f);
+	m_pNextButton = std::make_shared<Button>("../Assets/textures/nextButton.png", "nextButton", NEXT_BUTTON);
+	m_pNextButton->getTransform()->position = glm::vec2(TheGame::Instance()->getWindowWidth() - 100.0f, 550.0f);
 	m_pNextButton->addEventListener(CLICK, [&]()-> void
 	{
 		m_pNextButton->setActive(false);
-		TheGame::Instance()->changeSceneState(END_SCENE);
+		m_nextScene = PLAY_SCENE_2;
+		m_willChange = true;
 	});
 
-	m_pNextButton->addEventListener(MOUSE_OVER, [&]()->void
-	{
-		m_pNextButton->setAlpha(128);
-	});
+	m_pNextButton->addEventListener(MOUSE_OVER, [&]()->void { m_pNextButton->setAlpha(128); });
 
-	m_pNextButton->addEventListener(MOUSE_OUT, [&]()->void
-	{
-		m_pNextButton->setAlpha(255);
-	});
+	m_pNextButton->addEventListener(MOUSE_OUT, [&]()->void { m_pNextButton->setAlpha(255); });
 
-	addChild(m_pNextButton);
+	addChild(m_pNextButton.get(), 0, std::nullopt, false);
 
 	/* Instructions Label */
-	m_pInstructionsLabel = new Label("Press the backtick (`) character to toggle Debug View", "Consolas");
+	const SDL_Color Gold = { 212,175, 55, 0 };
+	m_pInstructionsLabel = std::make_shared<Label>("Press the backtick (`) character to toggle Debug View", "Consolas", 20, Gold);
 	m_pInstructionsLabel->getTransform()->position = glm::vec2(Config::SCREEN_WIDTH * 0.5f, 500.0f);
-
-	addChild(m_pInstructionsLabel);
+	addChild(m_pInstructionsLabel.get(), 0, std::nullopt, false);
 }
 
-void PlayScene::GUI_Function() const
+void PlayScene::GUI_Function() 
 {
 	// Always open with a NewFrame
 	ImGui::NewFrame();
+		
+	ImGui::Begin("Scene Control", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar);
 
-	// See examples by uncommenting the following - also look at imgui_demo.cpp in the IMGUI filter
-	//ImGui::ShowDemoWindow();
-	
-	ImGui::Begin("Your Window Title Goes Here", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar);
+	const char* playStr = "> Play";
+	const char* pauseStr = "|| Pause";
+	const char* sceneStateStr = m_bulletRain->isPaused() ? playStr : pauseStr;
 
-	if(ImGui::Button("My Button"))
+	ImGui::Checkbox("Draw player collision", &m_drawPlayerCollision);
+	ImGui::Checkbox("Draw bullet collision", &m_drawBulletCollision);
+
+	if (ImGui::Button(sceneStateStr)) 
 	{
-		std::cout << "My Button Pressed" << std::endl;
+		m_bulletRain->togglePause();
 	}
 
 	ImGui::Separator();
 
-	static float float3[3] = { 0.0f, 1.0f, 1.5f };
-	if(ImGui::SliderFloat3("My Slider", float3, 0.0f, 2.0f))
-	{
-		std::cout << float3[0] << std::endl;
-		std::cout << float3[1] << std::endl;
-		std::cout << float3[2] << std::endl;
-		std::cout << "---------------------------\n";
-	}
 	
+	const char* showStateStr = "Show spawn zone";
+	ImGui::Checkbox(showStateStr, &m_showSpawnZone);
+
+	bool moveSpawnZone = false;
+	
+	float spawnZoneWidth = m_bulletSpawnZone[1].x - m_bulletSpawnZone[0].x;
+	float spawnZoneHeight = m_bulletSpawnZone[1].y - m_bulletSpawnZone[0].y;
+
+	if (ImGui::SliderFloat("Bullet spawn zone X", &m_bulletSpawnZone[0].x, 0, (float)m_width))
+	{
+		moveSpawnZone = true;
+	}
+	if (ImGui::SliderFloat("Bullet spawn zone Y", &m_bulletSpawnZone[0].y, 0, (float)m_height))
+	{
+		moveSpawnZone = true;
+	}
+	if (ImGui::SliderFloat("Bullet spawn zone width", &spawnZoneWidth, 0, (float)m_width))
+	{
+		m_bulletSpawnZone[1].x = m_bulletSpawnZone[0].x + spawnZoneWidth;
+		moveSpawnZone = true;
+	}
+	if (ImGui::SliderFloat("Bullet spawn zone height", &spawnZoneHeight, 0, (float)m_height))
+	{
+		m_bulletSpawnZone[1].y = m_bulletSpawnZone[0].y + spawnZoneHeight;
+		moveSpawnZone = true;
+	}
+
+	if (moveSpawnZone)
+	{
+		m_bulletRain->setSpawnZone(m_bulletSpawnZone);
+	}
+
+	if (ImGui::SliderFloat("Bullet terminal velocity", &m_bulletTerminalVelocity.y, 0.0f, 1000.0f))
+	{
+		m_bulletRain->setTerminalVelocity(m_bulletTerminalVelocity);
+	}
+
+	ImGui::Separator();
+
 	ImGui::End();
+
+	//render bullet info
+	ImGui::Begin("Bullets", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar);
+
+	int bi = 0;
+	for (auto bullet : m_bulletRain->getBullets())
+	{
+		glm::vec2 bulletPos = bullet->getPosition();
+		glm::vec2 bulletVel = bullet->getVelocity();
+		std::string bulletStateStr = bullet->isPaused() ? playStr : pauseStr;
+		bulletStateStr.append(std::to_string(bi));
+
+		if (ImGui::Button(bulletStateStr.c_str()))
+		{
+			bullet->togglePause();
+		}
+		ImGui::Text("Position");
+		ImGui::Text("x: %f y: %f", bulletPos.x, bulletPos.y);
+		ImGui::Text("Velocity");
+		ImGui::Text("x: %f y: %f", bulletVel.x, bulletVel.y);
+		ImGui::Separator();
+
+		bi++;
+	}
+
+	ImGui::End();
+
+	ImGui::EndFrame();
 
 	// Don't Remove this
 	ImGui::Render();

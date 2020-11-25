@@ -14,9 +14,9 @@ public:
 	virtual ~Sprite();
 	
 	// Life Cycle Functions
-	virtual void draw() = 0;
-	virtual void update() = 0;
-	virtual void clean() = 0;
+	virtual void draw() override = 0;
+	virtual void update() override = 0;
+	virtual void clean() override = 0;
 
 	// getters
 	SpriteSheet* getSpriteSheet();
