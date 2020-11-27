@@ -68,30 +68,34 @@ void StartScene::start()
 	m_pStartLabel->setParent(this);
 	addChild(m_pStartLabel);
 
-	m_pNameLabel = new Label(" YANG  (ID:101235517)","PinkChicken-Regular", 40, Orange, glm::vec2(400.0f, 180.0f));
+	m_pNameLabel = new Label("MINGKUN YANG  (ID:101235517)","PinkChicken-Regular", 40, Orange, glm::vec2(400.0f, 230.0f));
 	m_pNameLabel->setParent(this);
 	addChild(m_pNameLabel);
 
-	m_pNameLabel2 = new Label("OGUNLESI  (ID:101285729)","PinkChicken-Regular", 40, Orange, glm::vec2(400.0f, 230.0f));
+	m_pNameLabel2 = new Label(" MARIAM OGUNLESI  (ID:101285729)","PinkChicken-Regular", 40, Orange, glm::vec2(400.0f, 280.0f));
 	m_pNameLabel2->setParent(this);
 	addChild(m_pNameLabel2);
 
-	m_pScene1Label = new Label("SCENE ONE", "lazy", 16, Orange, glm::vec2(400.0f, 260.0f));
+	m_pNameLabel3 = new Label(" AROSHABEL MOORE (ID:101156682)", "PinkChicken-Regular", 40, Orange, glm::vec2(400.0f, 180.0f));
+	m_pNameLabel3->setParent(this);
+	addChild(m_pNameLabel3);
+
+	m_pScene1Label = new Label("SCENE ONE", "Thorsley", 16, Orange, glm::vec2(400.0f, 310.0f));
 	m_pScene1Label->setParent(this);
 	addChild(m_pScene1Label);
 
-	m_pScene2Label = new Label("SCENE TWO", "lazy", 16, Orange, glm::vec2(400.0f, 460.0f));
+	m_pScene2Label = new Label("SCENE TWO", "Thorsley", 16, Orange, glm::vec2(400.0f, 460.0f));
 	m_pScene2Label->setParent(this);
 	addChild(m_pScene2Label);
 
 
-	/*m_pShip = new Ship();
-	m_pShip->getTransform()->position = glm::vec2(400.0f, 300.0f); 
-	addChild(m_pShip); */
+	//m_pShip = new Ship();
+	//m_pShip->getTransform()->position = glm::vec2(400.0f, 300.0f); 
+	//addChild(m_pShip); 
 
 	// Start Button
 	m_pStartLevel1Button = new Button();
-	m_pStartLevel1Button->getTransform()->position = glm::vec2(400.0f, 320.0f); 
+	m_pStartLevel1Button->getTransform()->position = glm::vec2(400.0f, 370.0f); 
 
 	m_pStartLevel1Button->addEventListener(CLICK, [&]()-> void
 	{
