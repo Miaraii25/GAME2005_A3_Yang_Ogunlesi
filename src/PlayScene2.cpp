@@ -31,7 +31,7 @@ PlayScene2::~PlayScene2()
 
 void PlayScene2::draw()
 {
-	TextureManager::Instance()->draw("playscene", 400, 300, 0, 255, true);
+	TextureManager::Instance()->draw("space", 400, 300, 0, 255, true);
 
 	//draw debug stuff first
 	if (m_drawWalls)
@@ -61,7 +61,7 @@ void PlayScene2::draw()
 		//the collision volumes
 		Util::DrawCircle(circleCenter, circleRadius + 1.0f);
 		Util::DrawRect(aabbCenter - halfExt, halfExt.x * 2 + 1.0f, halfExt.y * 2 + 1.0f);
-		
+
 		//the displacement between the two objects
 		Util::DrawLine(circleCenter, aabbCenter);
 
@@ -71,7 +71,7 @@ void PlayScene2::draw()
 		Util::DrawLine(closest, closest + surfaceNormal, glm::vec4(1.0f, 0.0f, 1.0f, 1.0f));
 
 		//the velocity vector (clamped so it doesn't go crazy)
-		Util::DrawLine(aabbCenter, aabbCenter + glm::clamp(m_pPlayerPaddle->getVelocity(), glm::vec2(-100.0f,-100.0f), glm::vec2(100.0f,100.0f)), glm::vec4(1.0f, 1.0f, 0.0f, 1.0f));
+		Util::DrawLine(aabbCenter, aabbCenter + glm::clamp(m_pPlayerPaddle->getVelocity(), glm::vec2(-100.0f, -100.0f), glm::vec2(100.0f, 100.0f)), glm::vec4(1.0f, 1.0f, 0.0f, 1.0f));
 	}
 
 	//draw main game items
@@ -95,7 +95,7 @@ void PlayScene2::update()
 	if (CollisionManager::pointRectCheck(EventManager::Instance().getMousePosition(), m_playZone[0], disp.x, disp.y))
 	{
 		//only add position every 2 frames to get smoother speed from position delta
-		if (m_frameCount+1 % 2)
+		if (m_frameCount + 1 % 2)
 		{
 			m_pPlayerPaddle->addToFlightPath(EventManager::Instance().getMousePosition());
 		}
@@ -113,34 +113,34 @@ void PlayScene2::update()
 			{
 			case BallType::CIRCLE:
 				res = CollisionManager::circleAABBCheck(m_pBall, border, [this, border](CollisionResult result) -> void
+				{
+					if (!m_pBall->AtRest())
 					{
-						if (!m_pBall->AtRest())
-						{
-							glm::vec2 n = glm::normalize(result.surfaceNormal);
-							glm::vec2 d = m_pBall->getVelocity();
-							glm::vec2 r = d - 2.0f * (glm::dot(d, n) * n);
+						glm::vec2 n = glm::normalize(result.surfaceNormal);
+						glm::vec2 d = m_pBall->getVelocity();
+						glm::vec2 r = d - 2.0f * (glm::dot(d, n) * n);
 
-							m_pBall->getRigidBody()->velocity = r;
-							m_pBall->getRigidBody()->velocity *= (1.0f / m_pBall->getMass());
-						}
-					});
+						m_pBall->getRigidBody()->velocity = r;
+						m_pBall->getRigidBody()->velocity *= (1.0f / m_pBall->getMass());
+					}
+				});
 
 				break;
 
 			case BallType::SQUARE:
 				res = CollisionManager::AABBCheck(m_pBall, border, [this, border](CollisionResult result) -> void
+				{
+					if (!m_pBall->AtRest())
 					{
-						if (!m_pBall->AtRest())
-						{
-							glm::vec2 n = glm::normalize(result.surfaceNormal);
-							glm::vec2 d = m_pBall->getVelocity();
-							glm::vec2 r = d - 2.0f * (glm::dot(d, n) * n);
+						glm::vec2 n = glm::normalize(result.surfaceNormal);
+						glm::vec2 d = m_pBall->getVelocity();
+						glm::vec2 r = d - 2.0f * (glm::dot(d, n) * n);
 
-							m_pBall->getRigidBody()->velocity = r;
-							m_pBall->getRigidBody()->velocity *= (1.0f / m_pBall->getMass());
-						}
-					});
-				
+						m_pBall->getRigidBody()->velocity = r;
+						m_pBall->getRigidBody()->velocity *= (1.0f / m_pBall->getMass());
+					}
+				});
+
 				break;
 			}
 
@@ -194,22 +194,22 @@ void PlayScene2::update()
 		}
 
 		CollisionResult playerResult = CollisionManager::circleAABBCheck(m_pBall, m_pPlayerPaddle, [this](CollisionResult result) -> void
-			{
-				//get a straight line between the ball and the collision surface 
-				//this is used to reflect velocity around
-				glm::vec2 n = glm::normalize(m_pBall->getPosition() - result.collisionPoint);
-				glm::vec2 d = m_pBall->getVelocity();
-				glm::vec2 r = d - 2.0f * (glm::dot(d, n) * n);
+		{
+			//get a straight line between the ball and the collision surface 
+			//this is used to reflect velocity around
+			glm::vec2 n = glm::normalize(m_pBall->getPosition() - result.collisionPoint);
+			glm::vec2 d = m_pBall->getVelocity();
+			glm::vec2 r = d - 2.0f * (glm::dot(d, n) * n);
 
-				//now we have the direction figure out the speed
-				glm::vec2 rNorm = glm::normalize(r); //reduce to unit vector so we can multiply
-				glm::vec2 newVel = r + m_pPlayerPaddle->getVelocity();
+			//now we have the direction figure out the speed
+			glm::vec2 rNorm = glm::normalize(r); //reduce to unit vector so we can multiply
+			glm::vec2 newVel = r + m_pPlayerPaddle->getVelocity();
 
-				newVel *= (1.0f / m_pBall->getMass())+(1.0f / m_pPlayerPaddle->getMass());
+			newVel *= (1.0f / m_pBall->getMass()) + (1.0f / m_pPlayerPaddle->getMass());
 
-				m_pBall->getRigidBody()->velocity = newVel;
+			m_pBall->getRigidBody()->velocity = newVel;
 
-			}, true /*this object has a centered origin*/);
+		}, true /*this object has a centered origin*/);
 
 		if (playerResult.collided)
 		{
@@ -273,7 +273,7 @@ void PlayScene2::handleEvents()
 void PlayScene2::start()
 {
 	// Load background
-	TextureManager::Instance()->load("../Assets/backgrounds/playscene.png", "playscene");
+	TextureManager::Instance()->load("../Assets/backgrounds/space.png", "space");
 
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
@@ -309,24 +309,24 @@ void PlayScene2::start()
 	m_pBorders[3] = std::make_shared<PlayZone>(30.0f, m_height);
 
 	//bottom border
-	m_pBorders[0]->getTransform()->position = glm::vec2(0.0f, m_height-20.0f);
+	m_pBorders[0]->getTransform()->position = glm::vec2(0.0f, m_height - 20.0f);
 	//left border
 	m_pBorders[1]->getTransform()->position = glm::vec2(0.0f, 0.0f);
 	//top border
 	m_pBorders[2]->getTransform()->position = glm::vec2(0.0f, 0.0f);
 	//right border
-	m_pBorders[3]->getTransform()->position = glm::vec2(m_width-20.0f, 0.0f);
+	m_pBorders[3]->getTransform()->position = glm::vec2(m_width - 20.0f, 0.0f);
 
 
 	//// Back Button
 	m_pBackButton = std::make_shared<Button>("../Assets/textures/backButton.png", "backButton", BACK_BUTTON);
 	m_pBackButton->getTransform()->position = glm::vec2(100.0f, 550.0f);
 	m_pBackButton->addEventListener(CLICK, [&]()-> void
-		{
-			m_pBackButton->setActive(false);
-			m_nextScene = m_lastScene;
-			m_willChange = true;
-		});
+	{
+		m_pBackButton->setActive(false);
+		m_nextScene = m_lastScene;
+		m_willChange = true;
+	});
 
 	m_pBackButton->addEventListener(MOUSE_OVER, [&]()->void { m_pBackButton->setAlpha(128); });
 
@@ -338,11 +338,11 @@ void PlayScene2::start()
 	m_pNextButton = std::make_shared<Button>("../Assets/textures/nextButton.png", "nextButton", NEXT_BUTTON);
 	m_pNextButton->getTransform()->position = glm::vec2(TheGame::Instance()->getWindowWidth() - 100.0f, 550.0f);
 	m_pNextButton->addEventListener(CLICK, [&]()-> void
-		{
-			m_pNextButton->setActive(false);
-			m_nextScene = PLAY_SCENE_2;
-			m_willChange = true;
-		});
+	{
+		m_pNextButton->setActive(false);
+		m_nextScene = START_SCENE;
+		m_willChange = true;
+	});
 
 	m_pNextButton->addEventListener(MOUSE_OVER, [&]()->void { m_pNextButton->setAlpha(128); });
 
@@ -423,7 +423,7 @@ void PlayScene2::GUI_Function()
 
 	ImGui::Text("Position");
 	ImGui::Text("x: %f y: %f", m_pBall->getPosition().x, m_pBall->getPosition().y);
-	
+
 	ImGui::SliderFloat("Mass", &m_pBall->getRigidBody()->mass, 1.0f, 100.0f);
 
 	ImGui::Separator();
