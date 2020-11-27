@@ -31,7 +31,7 @@ PlayScene2::~PlayScene2()
 
 void PlayScene2::draw()
 {
-	TextureManager::Instance()->draw("playscene", 400, 300, 0, 255, true);
+	TextureManager::Instance()->draw("space", 400, 300, 0, 255, true);
 
 	//draw debug stuff first
 	if (m_drawWalls)
@@ -273,7 +273,7 @@ void PlayScene2::handleEvents()
 void PlayScene2::start()
 {
 	// Load background
-	TextureManager::Instance()->load("../Assets/backgrounds/playscene.png", "playscene");
+	TextureManager::Instance()->load("../Assets/backgrounds/space.png", "space");
 
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
