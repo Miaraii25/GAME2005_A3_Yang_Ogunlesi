@@ -1,41 +1,4 @@
-﻿  PlayScene.cpp
-c:\users\acmoo\documents\github\game2005_a3_yang_ogunlesi\src\playscene2.h(18): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
-c:\users\acmoo\documents\github\game2005_a3_yang_ogunlesi\src\playscene2.h(19): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
-c:\users\acmoo\documents\github\game2005_a3_yang_ogunlesi\src\playscene.cpp(34): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-c:\users\acmoo\documents\github\game2005_a3_yang_ogunlesi\src\playscene.cpp(47): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  PlayScene2.cpp
-c:\users\acmoo\documents\github\game2005_a3_yang_ogunlesi\src\playscene2.h(18): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
-c:\users\acmoo\documents\github\game2005_a3_yang_ogunlesi\src\playscene2.h(19): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
-c:\users\acmoo\documents\github\game2005_a3_yang_ogunlesi\src\playscene2.cpp(42): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-c:\users\acmoo\documents\github\game2005_a3_yang_ogunlesi\src\playscene2.cpp(62): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\acmoo\documents\github\game2005_a3_yang_ogunlesi\src\playscene2.cpp(63): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-c:\users\acmoo\documents\github\game2005_a3_yang_ogunlesi\src\playscene2.cpp(161): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\memory(1801): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
-  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\memory(1865): note: see reference to function template instantiation 'std::_Ref_count_obj<_Ty>::_Ref_count_obj<int&,int&>(int &,int &)' being compiled
-          with
-          [
-              _Ty=PlayZone
-          ]
-  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\memory(1866): note: see reference to function template instantiation 'std::_Ref_count_obj<_Ty>::_Ref_count_obj<int&,int&>(int &,int &)' being compiled
-          with
-          [
-              _Ty=PlayZone
-          ]
-  c:\users\acmoo\documents\github\game2005_a3_yang_ogunlesi\src\playscene2.cpp(302): note: see reference to function template instantiation 'std::shared_ptr<PlayZone> std::make_shared<PlayZone,int&,int&>(int &,int &)' being compiled
-  StartScene.cpp
-c:\users\acmoo\documents\github\game2005_a3_yang_ogunlesi\src\playscene2.h(18): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
-c:\users\acmoo\documents\github\game2005_a3_yang_ogunlesi\src\playscene2.h(19): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
-  Generating Code...
-  Template.vcxproj -> C:\Users\acmoo\Documents\GitHub\GAME2005_A3_Yang_Ogunlesi\bin\Debug\Template.exe
+﻿  StartScene.cpp
+E:\物理A3\GAME2005_A2_Yang_Ogunlesi\src\PlayScene2.h(18,12): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
+E:\物理A3\GAME2005_A2_Yang_Ogunlesi\src\PlayScene2.h(19,13): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
+  Template.vcxproj -> E:\物理A3\GAME2005_A2_Yang_Ogunlesi\bin\Debug\Template.exe
